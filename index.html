@@ -37,6 +37,11 @@
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
+
+    window.flutterConfiguration = {
+      canvasKitBaseUrl: "http://cdn.jsdelivr.net/npm/canvaskit-wasm@0.31.0/bin/"
+    };
+
     var serviceWorkerVersion = '1902259320';
     var scriptLoaded = false;
     function loadMainDartJs() {
