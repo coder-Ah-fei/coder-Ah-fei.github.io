@@ -1,6 +1,6 @@
 {
-    "name": "page_turn_clock",
-    "short_name": "page_turn_clock",
+    "name": "testf_can_delete",
+    "short_name": "testf_can_delete",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

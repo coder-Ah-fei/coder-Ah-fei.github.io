@@ -3,28 +3,32 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "version.json": "17f8390563fa1a03193b7481148e0505",
-"index.html": "b8ae54e0dca52c88aab4c91aaa04da07",
-"/": "b8ae54e0dca52c88aab4c91aaa04da07",
-"main.dart.js": "3cb8adbcda87316d57561ef78c0979bc",
-"flutter.js": "eb2682e33f25cd8f1fc59011497c35f8",
+  "version.json": "a922d1a4619b4ad32046598fa2680709",
+"index.html": "56af9d6e95986a3510ab643f5ee6ef9f",
+"/": "56af9d6e95986a3510ab643f5ee6ef9f",
+"main.dart.js_4.part.js": "3c1daa706efab47e14fe10b98551d5e8",
+"main.dart.js": "4fddd592ddad2eec504215711a1ff5e4",
+"flutter.js": "f85e6fb278b0fd20c349186fb46ae36d",
+"main.dart.js_5.part.js": "57799c3624e93fed183b96fa16d54274",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"manifest.json": "df1c981c4fb0bec9c2bf0755eda4ff5f",
-"assets/AssetManifest.json": "c3c6029e0182cc322759a6dea9213460",
-"assets/NOTICES": "47741ebc8e70e092386577f055595932",
-"assets/sounds/1.mp3": "98b2c3d0019182e5845b5e4383754c3c",
+"manifest.json": "615a956c56a07705486500d2f7c0c8e1",
+"main.dart.js_1.part.js": "e4239911364461782b27e62297fe44e5",
+"main.dart.js_3.part.js": "6e9f9b75070b44a360e0c21ceb7a1916",
+"assets/AssetManifest.json": "2efbb41d7877d10aac9d091f58ccd7b9",
+"assets/NOTICES": "3dc7b8808cbdca0b033c9b2f0588d9e6",
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
-"assets/packages/wakelock_web/assets/no_sleep.js": "7748a45cd593f33280669b29c2c8919a",
+"assets/shaders/ink_sparkle.frag": "8bd695bc5f199275c7ba761145fd0fff",
 "assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
-"canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
-"canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
-"canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
-"canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba"
+"main.dart.js_2.part.js": "8f316e83df89f7309985d7f3879d9b3a",
+"canvaskit/canvaskit.js": "2bc454a691c631b07a9307ac4ca47797",
+"canvaskit/profiling/canvaskit.js": "38164e5a72bdad0faa4ce740c9b8e564",
+"canvaskit/profiling/canvaskit.wasm": "95a45378b69e77af5ed2bc72b2209b94",
+"canvaskit/canvaskit.wasm": "bf50631470eb967688cca13ee181af62"
 };
 
 // The application shell files that are downloaded before a service worker can
@@ -32,7 +36,6 @@ const RESOURCES = {
 const CORE = [
   "main.dart.js",
 "index.html",
-"assets/NOTICES",
 "assets/AssetManifest.json",
 "assets/FontManifest.json"];
 // During install, the TEMP cache is populated with the application shell files.
@@ -131,9 +134,11 @@ self.addEventListener("fetch", (event) => {
     .then((cache) =>  {
       return cache.match(event.request).then((response) => {
         // Either respond with the cached resource, or perform a fetch and
-        // lazily populate the cache.
+        // lazily populate the cache only if the resource was successfully fetched.
         return response || fetch(event.request).then((response) => {
-          cache.put(event.request, response.clone());
+          if (response && Boolean(response.ok)) {
+            cache.put(event.request, response.clone());
+          }
           return response;
         });
       })
