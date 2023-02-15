@@ -1,6 +1,6 @@
 {
-    "name": "testf_can_delete",
-    "short_name": "testf_can_delete",
+    "name": "chatgpt_app",
+    "short_name": "chatgpt_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
